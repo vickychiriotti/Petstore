@@ -86,7 +86,7 @@ public class PetSteps {
         System.out.println("url:  " + url + id) ;
         System.out.println("response.getBody().asString():  " + response.getBody().asString());
         pet = OBJECT_MAPPER.readValue(response.getBody().asString(), Pet.class);
-        assert pets != null;
+        assert pet != null;
     }
 
     @And("The added {word} pet has the {word} value in the response body")
