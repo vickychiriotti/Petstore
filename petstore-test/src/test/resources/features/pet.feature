@@ -1,6 +1,7 @@
+@All
 @Pet
 Feature: Pet
-  @sanity
+  @GetPetByPetId
   Scenario Outline: Get a pet detail by petId
     Given The API endpoint method is /pet
     When I make a GET request with <petId>
@@ -19,17 +20,7 @@ Feature: Pet
       | 9      |   200       |
       | 10     |   200       |
 
-  @405 @error
-  Scenario Outline: Try to Get a pet by petId / Invalid ID supplied
-    Given The API endpoint method is /pet
-    When I make a GET request with <petId>
-    Then The response should have a <statusCode> status code
-    Examples:
-      | petId  | statusCode  |
-      | 345      |   404       |
-      | 2567     |   404       |
-
-  @sanity
+  @GetPetByStatus
   Scenario Outline: Get pets detail by status
     Given The API endpoint method is /pet/findByStatus
     When I make a GET request with <status> value
@@ -41,7 +32,7 @@ Feature: Pet
       | pending    |   200       |
       | sold       |   200       |
 
-  @sanity
+  @GetPetByTags
   Scenario Outline: Get a pet detail by tags
     Given The API endpoint method is /pet/findByTags
     When I make a GET request with <tag> value
@@ -53,7 +44,7 @@ Feature: Pet
       | tag2    |   200       |
       | tag3    |   200       |
 
-  @sanity @AddPet
+  @AddPet
   Scenario Outline: Add a new pet
     Given The API endpoint method is /pet
     When I create a new Pet with <id>, <name>, <categoryName>, <tagId> and <status>
@@ -65,8 +56,7 @@ Feature: Pet
       | 10 | Milo       | Dogs          |1     | available |
       | 11 | Garfield   | Cats          |2     | pending   |
 
-
-  @sanity @UpdatePet
+  @UpdatePet
   Scenario Outline: Update a pet in the store
     Given The API endpoint method is /pet
     When I update <id> pet with send a POST with <name> and <status> values
@@ -85,3 +75,13 @@ Feature: Pet
       | petId  | statusCode  |
       | 145      |   404       |
       | 154      |   404       |
+
+  @405 @error
+  Scenario Outline: Try to Get a pet by petId / Invalid ID supplied
+    Given The API endpoint method is /pet
+    When I make a GET request with <petId>
+    Then The response should have a <statusCode> status code
+    Examples:
+      | petId  | statusCode  |
+      | 345      |   404       |
+      | 2567     |   404       |

@@ -16,11 +16,18 @@
 
 package model;
 
+import lombok.*;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
-
+@NoArgsConstructor
+@Getter
+@Setter
+@Data
+@AllArgsConstructor
+@Builder
 @XmlRootElement(name = "Order")
 public class Order {
     private long id;

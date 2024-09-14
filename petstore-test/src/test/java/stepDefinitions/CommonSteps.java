@@ -1,9 +1,12 @@
 package stepDefinitions;
 
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+import lombok.Getter;
 
 import static io.restassured.RestAssured.given;
 
@@ -11,15 +14,10 @@ public class CommonSteps {
     private String baseURI;
     static String url;
 
-    public static Response getResponse() {
-        return response;
-    }
-
+    @Getter
     private static Response response;
     private String method;
     private String param;
-
-
 
     @Before
     public void setup() {
@@ -31,7 +29,7 @@ public class CommonSteps {
     public void theAPIEndpointMethod(String method) {
         url = baseURI + method + "/";
         this.method = method;
-        System.out.println(url);
+        System.out.println("url: " + url);
     }
 
     @When("I make a GET request with {word}")
@@ -44,7 +42,24 @@ public class CommonSteps {
         System.out.println(response.getBody().asString());
     }
 
-    ////
+    @When("I make a GET request")
+    public void iMakeAGETRequest() {
+        response = given()
+                .header("Accept", "application/json")
+                .when()
+                .get(url);
+        System.out.println(response.getBody().asString());
+    }
+
+    @When("I make a DELETE request with {int} id")
+    public void iMakeADELETERequest(int id) {
+        response = given()
+                .header("Accept", "application/json")
+                .when()
+                .delete(url + id);
+        System.out.println(response.getBody().asString());
+    }
+
     @When("I make a GET request with {word} value")
     public void iMakeAGETRequestWithParam(String value) {
         System.out.println("this.method: "+ this.method);

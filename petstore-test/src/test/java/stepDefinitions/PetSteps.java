@@ -24,15 +24,6 @@ public class PetSteps {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private Response response = CommonSteps.getResponse();
 
-    @Then("The response should have a {word} status code")
-    public void theResponseShouldHaveAStatusCode(String expectedStatusCode) {
-        response.then().assertThat().statusCode(Integer.parseInt(expectedStatusCode));
-        System.out.println("response.then().statusCode(Integer.parseInt(expectedStatusCode)): " + response.then().statusCode(Integer.parseInt(expectedStatusCode)));
-
-        System.out.println("Status Code: " + response.getStatusCode());
-        System.out.println("Response Body: " + response.getBody().asString());
-    }
-
     @And("The response contain Pet detail")
     public void theResponseContainPetDetail() throws JsonProcessingException {
         String responseBody = response.getBody().asString();
@@ -103,5 +94,10 @@ public class PetSteps {
     public void theUpdatedNamePetHasTheStatus(String name, String status) {
         assert pet.getName().equals(name);
         assert pet.getStatus().equals(status);
+    }
+
+    @Then("The response should have a {word} status code")
+    public void theResponseShouldHaveAStatusCode(String expectedStatusCode) {
+        response.then().assertThat().statusCode(Integer.parseInt(expectedStatusCode));
     }
 }
